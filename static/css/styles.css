@@ -1,0 +1,155 @@
+/* HTML Tag Selectors */
+body {
+    color: #222831;
+    background-color: #EEEEEE;
+    font-family: 'Montserrat', sans-serif;
+}
+
+a {
+    color: #222831;
+    text-decoration: none;
+}
+
+i {
+    color: #00ADB5;
+}
+
+.btn {
+    background-color: #00ADB5;
+    border: 1px solid #00ADB5;
+    color: #EEEEEE;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    line-height: 22.5px;
+}
+
+.btn:hover {
+    background-color: #009da5;
+    border: 1px solid #009da5;
+    color: #EEEEEE;
+}
+
+.btn i {
+    color: #EEEEEE;
+}
+
+/* Nav */
+nav {
+    background-color: #222831;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.20rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.navbar-brand span {
+    font-size: 1.20rem;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+}
+
+/* Login and Sign Up Section */
+.auth-form {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+.auth-form input {
+    font-size: 1.1rem;    
+    letter-spacing: 1px;
+}
+
+.auth-form .card-header {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.auth-form .card h5 {
+    padding: 1.5rem;
+}
+
+#login-section .card-body, #register-section .card-body {
+    padding: 3rem;
+}
+
+/* Error Handling */
+.error-handling {
+    display: block;    
+    letter-spacing: 0.7px;
+    margin-top: 1rem;
+}
+
+/* Home Section */
+.home-section h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2.25rem;
+    font-weight: 600;
+    line-height: 2.7rem;
+}
+
+.input-subscribe
+{
+    font-size: 0.9rem;
+}
+
+.home-section p {
+    line-height: 1.65rem;
+}
+
+.home-section ul {
+    padding-left: 0;
+}
+
+.home-section .post-date, .home-section .post-author {
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 23.1px;
+}
+
+.home-section p.post-body {
+    display: -webkit-box;
+    font-family: 'Montserrat', sans-serif;
+    --max-lines: 3;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--max-lines);
+}
+
+/* Widget */
+.widget {
+    margin-bottom: 2rem;
+}
+
+.widget-title {
+    border-bottom: 2px solid #00ADB5;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.widget h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 2.2rem;
+}
+
+/* Make Post */
+
+.make-post-section input {
+    border: 0;
+}
+
+.make-post-section input:focus {
+    box-shadow: 0 2px 0 #00ADB5 !important;
+}
+
+.widget-bg {
+    background-color: #e7e7e7;
+}
+
+#cke_body {
+    border: 0;
+}

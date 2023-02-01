@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %} iSulat | Login {% endblock %}
+
+{% block content %}
+<div class="home-section container pt-4 mt-5">
+    <div class="row justify-content-evenly">
+        <div class="col-lg-8">
+            <div class="card bg-transparent post-item border-0 mb-5">
+                <a href="{{ url_for('view_post', post_id = post.id) }}">
+                    <img class="card-img-top rounded-0" src="{{ post.img_url }}" alt="post-image">
+                </a>
+                <div class="card-body px-0">
+                    <h2 class="card-title">
+                        <a class="pe-5" style="font-size: 3rem;" href="#">{{ post.title }}</a>
+                    </h2>
+                    <ul class="post-meta mt-3">
+                        <li class="d-inline-block me-3">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <a class="ms-1 post-date" href="#">{{ post.date }}</a>
+                        </li>
+                        <li class="d-inline-block">
+                            <i class="fa-solid fa-user"></i>
+                            <a class="ms-1 post-author" href="#">{{ post.author.name }}</a>
+                        </li>
+                    </ul>
+                    <p class="card-text my-4">{{ post.body | striptags }}</p>
+                    <a href="{{ url_for('edit_post', post_id=post.id) }}" class="btn px-4 py-2 rounded-0">Edit Post<i class="fa-solid fa-arrow-right ms-2"></i></a>
+                </div>
+                <!-- End of Card Body -->
+            </div>
+            <!-- End of Card -->
+        </div>
+        <!-- End of Col 7 -->
+{% endblock %}

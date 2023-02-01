@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %} iSulat | Login {% endblock %}
+
+{% block content %}
+    <div class="home-section container pt-4 mt-5">
+        <div class="row justify-content-evenly">
+            <div class="col-lg-7">
+                {% for post in posts %}
+                <div class="card bg-transparent post-item border-0 mb-5">
+                    <a href="{{ url_for('view_post', post_id = post.id) }}">
+                        <img class="card-img-top rounded-0" src="{{ post.img_url }}" alt="post-image">
+                    </a>
+                    <div class="card-body px-0">
+                        <h2 class="card-title">
+                            <a class="" href="{{ url_for('view_post', post_id = post.id) }}">{{ post.title }}</a>
+                        </h2>
+                        <ul class="post-meta mt-3">
+                            <li class="d-inline-block me-3">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <a class="ms-1 post-date" href="#">{{ post.date }}</a>
+                            </li>
+                            <li class="d-inline-block">
+                                <i class="fa-solid fa-user"></i>
+                                <a class="ms-1 post-author" href="#">{{ post.author.name }}</a>
+                            </li>
+                        </ul>
+                        <p class="card-text post-body my-4">{{ post.body | striptags }}</p>
+                        <a href="{{ url_for('view_post', post_id = post.id) }}" class="btn px-4 py-2 rounded-0">Read More<i class="fa-solid fa-arrow-right ms-2"></i></a>
+                        <a href="{{ url_for('delete', post_id = post.id) }}" class="btn ms-2 px-4 py-2 rounded-0">Delete<i class="fa-solid fa-arrow-right ms-2"></i></a>
+                    </div>
+                    <!-- End of Card Body -->
+                </div>
+                {% endfor %}
+                <!-- End of Card -->
+            </div>
+            <!-- End of Col 7 -->
+            <div class="col-lg-3">
+                <div class="widget widget-bg p-4 text-center">
+                    <h2 class="widget-title d-inline-block mt-4">Subscribe</h2>
+                    <p class="mt-4">Get exclusive content and stay ahead of the curve. Subscribe to Sulat Aian and be the first to receive fresh ideas and insights.</p>
+                    <form action="#">
+                        <div class="form-group">
+                            <input type="email" class="form-control rounded-0 my-4 input-subscribe" placeholder="Enter your email">
+                            <button class="btn btn-success px-4 py-2 rounded-0">Subscribe <i class="fa-solid fa-arrow-right ms-2"></i></button>
+                        </div>
+                    </form>
+                </div>
+                <!-- End of Subscription Widget -->
+                <div class="widget">
+                    <div class="mb-3 text-center">
+                        <h2 class="widget-title">Featured Posts</h2>
+                    </div>
+                    {% for post in posts %}
+                    <div class="card bg-transparent post-item border-0 mb-3">
+                        <a href="#">
+                            <img class="card-img-top rounded-0" src="{{ post.img_url }}" alt="">
+                        </a>
+                        <div class="card-body px-0">
+                            <h4 class="card-title">
+                                <a class="" href="#">{{ post.title }}</a>
+                            </h4>
+                            <ul class="post-meta mt-3 mb-4">
+                                <li class="d-inline-block me-3">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    <a class="ms-1 post-date" href="#">{{ post.date }}</a>
+                                </li>
+                                <li class="d-inline-block">
+                                    <i class="fa-solid fa-user"></i>
+                                    <a class="ms-1 post-author" href="#">{{ post.author.name }}</a>
+                                </li>
+                            </ul>
+                            <a href="#" class="btn btn-success px-4 py-2 rounded-0">Read More<i class="fa-solid fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- End of Featured Widget -->
+            </div>
+            <!-- End of Col 4 -->
+        </div>
+        <!-- End of Row -->
+    </div>
+    <!-- End of Home Section -->
+{% endblock %}
