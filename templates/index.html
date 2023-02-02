@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} iSulat | Login {% endblock %}
+{% block title %} Sulat Aian | Home {% endblock %}
 
 {% block content %}
     <div class="home-section container pt-4 mt-5">
@@ -27,7 +27,9 @@
                         </ul>
                         <p class="card-text post-body my-4">{{ post.body | striptags }}</p>
                         <a href="{{ url_for('view_post', post_id = post.id) }}" class="btn px-4 py-2 rounded-0">Read More<i class="fa-solid fa-arrow-right ms-2"></i></a>
+                        {% if current_user.id == 1 %}
                         <a href="{{ url_for('delete', post_id = post.id) }}" class="btn ms-2 px-4 py-2 rounded-0">Delete<i class="fa-solid fa-arrow-right ms-2"></i></a>
+                        {% endif %}
                     </div>
                     <!-- End of Card Body -->
                 </div>

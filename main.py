@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, flash
+from flask import Flask, render_template, redirect, url_for, flash, abort
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bootstrap import Bootstrap
 from forms import LoginForm, RegisterForm, CreatePostForm
@@ -6,6 +6,7 @@ from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from datetime import datetime
+from functools import wraps
 from flask_login import (
     UserMixin,
     login_user,
@@ -13,6 +14,7 @@ from flask_login import (
     login_required,
     current_user,
     logout_user,
+    AnonymousUserMixin,
 )
 
 # Flask App
@@ -53,9 +55,16 @@ class BlogPost(db.Model):
     date = db.Column(db.String(250), nullable=False)
 
 
+# Anonymous User Default ID
+class Anonymous(AnonymousUserMixin):
+    def __init__(self):
+        self.id = 0
+
+
 # Logging In
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.anonymous_user = Anonymous
 
 
 @login_manager.user_loader
@@ -63,19 +72,31 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
+# Create admin-only decorator
+def admin_only(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if current_user.id != 1:
+            return abort(403)
+        return f(*args, **kwargs)
+
+    return decorated_function
+
+
 # Home
 @app.route("/")
 def home():
     users = User.query.all()
     posts = BlogPost.query.all()
-    return render_template("index.html", posts=posts, users=users)
+    return render_template("index.html", posts=posts, current_user=current_user)
 
 
 # Edit Post
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
+@admin_only
 @login_required
 def edit_post(post_id):
-    post = BlogPost.query.get(post_id)
+    post = BlogPost.query.get_or_404(post_id)
     edit_form = CreatePostForm(
         title=post.title,
         subtitle=post.subtitle,
@@ -89,8 +110,8 @@ def edit_post(post_id):
         post.img_url = edit_form.img_url.data
         post.body = edit_form.body.data
         db.session.commit()
+        flash("Post successfully edited.", "green")
         return redirect(url_for("view_post", post_id=post.id))
-
     return render_template(
         "make-post.html",
         form=edit_form,
@@ -103,7 +124,7 @@ def edit_post(post_id):
 # View Post
 @app.route("/view-post/<int:post_id>")
 def view_post(post_id):
-    requested_post = BlogPost.query.get(post_id)
+    requested_post = BlogPost.query.get_or_404(post_id)
     return render_template(
         "view-post.html", post=requested_post, current_user=current_user
     )
@@ -111,6 +132,8 @@ def view_post(post_id):
 
 # New Post
 @app.route("/new-post", methods=["GET", "POST"])
+@admin_only
+@login_required
 def new_post():
     form = CreatePostForm()
     if form.validate_on_submit():
@@ -185,6 +208,7 @@ def logout():
 
 # Delete Post
 @app.route("/delete/<int:post_id>")
+@admin_only
 def delete(post_id):
     post_to_delete = BlogPost.query.get(post_id)
     db.session.delete(post_to_delete)
