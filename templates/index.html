@@ -18,11 +18,11 @@
                         <ul class="post-meta mt-3">
                             <li class="d-inline-block me-3">
                                 <i class="fa-solid fa-calendar-days"></i>
-                                <a class="ms-1 post-date" href="#">{{ post.date }}</a>
+                                <span class="ms-1 post-date">{{ post.date }}</span>
                             </li>
                             <li class="d-inline-block">
                                 <i class="fa-solid fa-user"></i>
-                                <a class="ms-1 post-author" href="#">{{ post.author.name }}</a>
+                                <span class="ms-1 post-author">{{ post.author.name }}</span>
                             </li>
                         </ul>
                         <p class="card-text post-body my-4">{{ post.body | striptags }}</p>
@@ -55,24 +55,24 @@
                     </div>
                     {% for post in posts %}
                     <div class="card bg-transparent post-item border-0 mb-3">
-                        <a href="#">
+                        <a href="{{ url_for('view_post', post_id = post.id) }}">
                             <img class="card-img-top rounded-0" src="{{ post.img_url }}" alt="">
                         </a>
                         <div class="card-body px-0">
                             <h4 class="card-title">
-                                <a class="" href="#">{{ post.title }}</a>
+                                <a class="" href="{{ url_for('view_post', post_id = post.id) }}">{{ post.title }}</a>
                             </h4>
                             <ul class="post-meta mt-3 mb-4">
                                 <li class="d-inline-block me-3">
                                     <i class="fa-solid fa-calendar-days"></i>
-                                    <a class="ms-1 post-date" href="#">{{ post.date }}</a>
+                                    <span class="ms-1 post-date">{{ post.date }}</span>
                                 </li>
                                 <li class="d-inline-block">
                                     <i class="fa-solid fa-user"></i>
-                                    <a class="ms-1 post-author" href="#">{{ post.author.name }}</a>
+                                    <span class="ms-1 post-author">{{ post.author.name }}</span>
                                 </li>
                             </ul>
-                            <a href="#" class="btn btn-success px-4 py-2 rounded-0">Read More<i class="fa-solid fa-arrow-right ms-2"></i></a>
+                            <a href="{{ url_for('view_post', post_id = post.id) }}" class="btn btn-success px-4 py-2 rounded-0">Read More<i class="fa-solid fa-arrow-right ms-2"></i></a>
                         </div>
                     </div>
                     {% endfor %}
