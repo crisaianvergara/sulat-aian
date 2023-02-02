@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} iSulat | Login {% endblock %}
+{% block title %} Sulat Aian | View Post {% endblock %}
 
 {% block content %}
 <div class="view-post-section container pt-4 mt-5">
@@ -22,7 +22,7 @@
                             <span class="ms-1 post-author" href="#">{{ post.author.name }}</span>
                         </li>
                     </ul>
-                    <p class="card-text my-4">{{ post.body | safe }}</p>
+                    <p class="card-text my-4 text-dark-emphasis">{{ post.body | safe }}</p>
                     {% if current_user.id == 1 %}
                     <a href="{{ url_for('edit_post', post_id=post.id) }}" class="btn px-4 py-2 rounded-0">Edit Post<i class="fa-solid fa-arrow-right ms-2"></i></a>
                     {% endif %}

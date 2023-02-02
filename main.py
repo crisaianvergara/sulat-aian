@@ -17,6 +17,7 @@ from flask_login import (
     logout_user,
     AnonymousUserMixin,
 )
+from sqlalchemy import desc
 
 # Flask App
 app = Flask(__name__)
@@ -115,8 +116,11 @@ def admin_only(f):
 # Home
 @app.route("/")
 def home():
-    posts = BlogPost.query.all()
-    return render_template("index.html", posts=posts, current_user=current_user)
+    posts = BlogPost.query.order_by(desc("id"))
+    limit_two = BlogPost.query.limit(2)
+    return render_template(
+        "index.html", posts=posts, current_user=current_user, limit_two=limit_two
+    )
 
 
 # Admin Section

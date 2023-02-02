@@ -55,11 +55,31 @@ nav {
     letter-spacing: 0.1rem;
 }
 
+/* Nav Dropdown */
+.dropdown-menu {
+    border-radius: 0;
+}
+
+.dropdown-menu li a, .dropdown-menu li span {
+    font-size: 1.15rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #009da5;
+    color: #EEEEEE;
+}
+
+
+
+
 /* Login and Sign Up Section */
 .auth-form {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 1.2rem;
     letter-spacing: 1px;
+    margin-bottom: 260px;
 }
 
 .auth-form input, .auth-form textarea {
@@ -123,6 +143,10 @@ nav {
     -webkit-line-clamp: var(--max-lines);
 }
 
+.post-hover:hover {
+    opacity: 0.9;
+}
+
 /* Widget */
 .widget {
     margin-bottom: 2rem;
@@ -141,6 +165,12 @@ nav {
     line-height: 2.2rem;
 }
 
+.twitter-tweet {
+    margin-top: 0 !important;
+    margin: auto;
+}
+
+
 /* Make Post */
 
 .make-post-section input {
@@ -152,6 +182,7 @@ nav {
 }
 
 .widget-bg {
+    border-radius: 9px;
     background-color: #e7e7e7;
 }
 
@@ -174,3 +205,5 @@ nav {
     font-size: 0.9rem;
     font-weight: 500;
 }
+
+/* Footer */
