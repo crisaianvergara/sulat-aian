@@ -1,12 +1,13 @@
 from flask import Flask, render_template, redirect, url_for, flash, abort
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bootstrap import Bootstrap
-from forms import LoginForm, RegisterForm, CreatePostForm
+from forms import LoginForm, RegisterForm, CreatePostForm, CommentForm
 from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from functools import wraps
+from flask_gravatar import Gravatar
 from flask_login import (
     UserMixin,
     login_user,
@@ -39,6 +40,8 @@ class User(UserMixin, db.Model):
 
     posts = relationship("BlogPost", back_populates="author")
 
+    comments = relationship("Comment", back_populates="comment_author")
+
 
 # Table Blog Posts
 class BlogPost(db.Model):
@@ -54,6 +57,32 @@ class BlogPost(db.Model):
     body = db.Column(db.Text, nullable=False)
     date = db.Column(db.String(250), nullable=False)
 
+    comments = relationship("Comment", back_populates="parent_post")
+
+
+# Table Comments
+class Comment(db.Model):
+    __tablename__ = "comments"
+    id = db.Column(db.Integer, primary_key=True)
+    author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    comment_author = relationship("User", back_populates="comments")
+
+    post_id = db.Column(db.Integer, db.ForeignKey("blog_posts.id"))
+    parent_post = relationship("BlogPost", back_populates="comments")
+    text = db.Column(db.Text, nullable=False)
+
+
+# Gravatar
+gravatar = Gravatar(
+    app,
+    size=100,
+    rating="g",
+    default="retro",
+    force_default=False,
+    force_lower=False,
+    use_ssl=False,
+    base_url=None,
+)
 
 # Anonymous User Default ID
 class Anonymous(AnonymousUserMixin):
@@ -86,9 +115,59 @@ def admin_only(f):
 # Home
 @app.route("/")
 def home():
-    users = User.query.all()
     posts = BlogPost.query.all()
     return render_template("index.html", posts=posts, current_user=current_user)
+
+
+# Admin Section
+# New Post
+@app.route("/new-post", methods=["GET", "POST"])
+@admin_only
+@login_required
+def new_post():
+    form = CreatePostForm()
+    if form.validate_on_submit():
+        new_post = BlogPost(
+            author=current_user,
+            title=form.title.data.title(),
+            subtitle=form.subtitle.data.title(),
+            img_url=form.img_url.data,
+            body=form.body.data,
+            date=datetime.today().strftime("%B %d, %Y"),
+        )
+        db.session.add(new_post)
+        db.session.commit()
+        flash("You're story successfully published.", "green")
+        return redirect(url_for("home"))
+    return render_template("make-post.html", form=form, current_user=current_user)
+
+
+# View Post and Comment
+@app.route("/view-post/<int:post_id>", methods=["GET", "POST"])
+def view_post(post_id):
+    form = CommentForm()
+    requested_post = BlogPost.query.get_or_404(post_id)
+    comments = Comment.query.all()
+    if form.validate_on_submit():
+        if current_user.is_authenticated:
+            new_comment = Comment(
+                text=form.comment.data,
+                comment_author=current_user,
+                parent_post=requested_post,
+            )
+            db.session.add(new_comment)
+            db.session.commit()
+            flash("Commented successfully.", "green")
+            return redirect(url_for("view_post", post_id=post_id))
+        flash("You need to sign in or sign up to comment.", "red")
+        return redirect(url_for("view_post", post_id=post_id))
+
+    return render_template(
+        "view-post.html",
+        post=requested_post,
+        current_user=current_user,
+        form=form,
+    )
 
 
 # Edit Post
@@ -121,37 +200,18 @@ def edit_post(post_id):
     )
 
 
-# View Post
-@app.route("/view-post/<int:post_id>")
-def view_post(post_id):
-    requested_post = BlogPost.query.get_or_404(post_id)
-    return render_template(
-        "view-post.html", post=requested_post, current_user=current_user
-    )
-
-
-# New Post
-@app.route("/new-post", methods=["GET", "POST"])
+# Delete Post
+@app.route("/delete/<int:post_id>")
 @admin_only
-@login_required
-def new_post():
-    form = CreatePostForm()
-    if form.validate_on_submit():
-        new_post = BlogPost(
-            author=current_user,
-            title=form.title.data,
-            subtitle=form.subtitle.data,
-            img_url=form.img_url.data,
-            body=form.body.data,
-            date=datetime.today().strftime("%B %d, %Y"),
-        )
-        db.session.add(new_post)
-        db.session.commit()
-        flash("You're story successfully published.", "green")
-        return redirect(url_for("home"))
-    return render_template("make-post.html", form=form, current_user=current_user)
+def delete(post_id):
+    post_to_delete = BlogPost.query.get(post_id)
+    db.session.delete(post_to_delete)
+    db.session.commit()
+    flash("Post successfully deleted.", "green")
+    return redirect(url_for("home"))
 
 
+# Admin, Users, And Guest Section
 # Login
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -172,6 +232,14 @@ def login():
             flash("You've successfully signed in.", "green")
             return redirect(url_for("home"))
     return render_template("login.html", form=form, current_user=current_user)
+
+
+# Logout
+@app.route("/logout")
+def logout():
+    logout_user()
+    flash("You've successfully signed out.", "green")
+    return redirect(url_for("home"))
 
 
 # Register
@@ -196,25 +264,6 @@ def register():
         flash("You've successfully signed up.", "green")
         return redirect(url_for("home"))
     return render_template("register.html", form=form, current_user=current_user)
-
-
-# Logout
-@app.route("/logout")
-def logout():
-    logout_user()
-    flash("You've successfully signed out.", "green")
-    return redirect(url_for("home"))
-
-
-# Delete Post
-@app.route("/delete/<int:post_id>")
-@admin_only
-def delete(post_id):
-    post_to_delete = BlogPost.query.get(post_id)
-    db.session.delete(post_to_delete)
-    db.session.commit()
-    flash("Post successfully deleted.", "green")
-    return redirect(url_for("home"))
 
 
 # Run Flask
