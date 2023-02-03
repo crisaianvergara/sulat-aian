@@ -123,7 +123,7 @@ def admin_only(f):
 @app.route("/", methods=["GET", "POST"])
 def home():
     form = SubscriberForm()
-    posts = BlogPost.query.order_by(desc("id"))
+    posts = BlogPost.query.order_by(desc("id")).limit(3)
     limit_two = BlogPost.query.limit(2)
     # Subscriber
     if form.validate_on_submit():
@@ -288,6 +288,25 @@ def register():
         flash("You've successfully signed up.", "green")
         return redirect(url_for("home"))
     return render_template("register.html", form=form, current_user=current_user)
+
+
+# Blog
+@app.route("/blog")
+def blog():
+    posts = BlogPost.query.order_by(desc("id"))
+    return render_template("blog.html", posts=posts)
+
+
+# About
+@app.route("/about")
+def about():
+    render_template("about.html")
+
+
+# Contact
+@app.route("/contact")
+def contact():
+    render_template("contact.html")
 
 
 # Run Flask

@@ -133,7 +133,7 @@ nav {
     line-height: 23.1px;
 }
 
-.home-section p.post-body {
+p.post-body {
     display: -webkit-box;
     font-family: 'Montserrat', sans-serif;
     --max-lines: 3;

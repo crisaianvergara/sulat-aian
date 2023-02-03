@@ -32,13 +32,13 @@
                 <a class="nav-link" href="{{ url_for('home') }}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('home') }}">Blog</a>
+                <a class="nav-link" href="{{ url_for('blog') }}">Blog</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
+                <a class="nav-link" href="{{ url_for('about') }}">About</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
+                <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
             </li>
             <li class="nav-item dropdown ms-4">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -82,7 +82,7 @@
         {% endif %}
     {% endwith %}
     {% block content %} {% endblock %}
-    <footer id="footer" class="text-center pb-3">
+    <footer id="footer" class="text-center mt-5 pt-5 pb-3">
         <ul class="pb-1">
             <li class="d-inline-block"><a href="https://www.linkedin.com/in/crisaianvergara/" target="_blank"><i class="fa-brands fa-linkedin fa-2xl mx-2"></i></a></li>
             <li class="d-inline-block"><a href="https://github.com/crisaianvergara" target="_blank"><i class="fa-brands fa-github fa-2xl mx-2"></i></i></a></li>
