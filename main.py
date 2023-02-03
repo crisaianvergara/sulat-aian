@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, flash, abort
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bootstrap import Bootstrap
-from forms import LoginForm, RegisterForm, CreatePostForm, CommentForm
+from forms import LoginForm, RegisterForm, CreatePostForm, CommentForm, SubscriberForm
 from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
@@ -35,7 +35,7 @@ db = SQLAlchemy(app)
 class User(UserMixin, db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
+    name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
 
@@ -71,6 +71,12 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey("blog_posts.id"))
     parent_post = relationship("BlogPost", back_populates="comments")
     text = db.Column(db.Text, nullable=False)
+
+
+class Subscribers(db.Model):
+    __tablename__ = "subscribers"
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), unique=True, nullable=False)
 
 
 # Gravatar
@@ -114,12 +120,27 @@ def admin_only(f):
 
 
 # Home
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def home():
+    form = SubscriberForm()
     posts = BlogPost.query.order_by(desc("id"))
     limit_two = BlogPost.query.limit(2)
+    # Subscriber
+    if form.validate_on_submit():
+        if Subscribers.query.filter_by(email=form.subscriber.data).first():
+            flash("You've already subscribed with that email.", "red")
+            return redirect(url_for("home"))
+        new_subscriber = Subscribers(email=form.subscriber.data)
+        db.session.add(new_subscriber)
+        db.session.commit()
+        flash("Subscribed successfully.", "green")
+        return redirect(url_for("home"))
     return render_template(
-        "index.html", posts=posts, current_user=current_user, limit_two=limit_two
+        "index.html",
+        posts=posts,
+        current_user=current_user,
+        limit_two=limit_two,
+        form=form,
     )
 
 
@@ -151,7 +172,6 @@ def new_post():
 def view_post(post_id):
     form = CommentForm()
     requested_post = BlogPost.query.get_or_404(post_id)
-    comments = Comment.query.all()
     if form.validate_on_submit():
         if current_user.is_authenticated:
             new_comment = Comment(

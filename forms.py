@@ -61,3 +61,11 @@ class CommentForm(FlaskForm):
         render_kw={"placeholder": "Write a comment"},
     )
     submit = SubmitField("Comment")
+
+
+class SubscriberForm(FlaskForm):
+    subscriber = StringField(
+        "Email Address",
+        validators=[DataRequired(), Email()],
+        render_kw={"placeholder": "Enter your email"},
+    )

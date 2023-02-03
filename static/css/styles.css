@@ -79,7 +79,6 @@ nav {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 1.2rem;
     letter-spacing: 1px;
-    margin-bottom: 260px;
 }
 
 .auth-form input, .auth-form textarea {
@@ -207,3 +206,4 @@ nav {
 }
 
 /* Footer */
+
