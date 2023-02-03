@@ -107,7 +107,7 @@ nav {
 }
 
 /* Home Section */
-.home-section h2, .view-post-section h2 {
+.home-section h2, .view-post-section h2, .about-section h2 {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 2.25rem;
     font-weight: 600;
@@ -172,11 +172,11 @@ p.post-body {
 
 /* Make Post */
 
-.make-post-section input {
+.make-post-section input, .contact-section input  {
     border: 0;
 }
 
-.make-post-section input:focus {
+.make-post-section input:focus , .contact-section input:focus {
     box-shadow: 0 2px 0 #00ADB5 !important;
 }
 
@@ -205,5 +205,26 @@ p.post-body {
     font-weight: 500;
 }
 
-/* Footer */
+/* About */
+.about-section p {
+    line-height: 26.4px;
+}
 
+/* Contact Section */
+.contact-section textarea, .view-post-section textarea {
+    resize: none;
+    border: 0;
+}
+.contact-section textarea:focus, .view-post-section textarea:focus {
+    box-shadow: 0 2px 0 #00ADB5 !important;
+}
+
+.contact-section h1 {
+    font-size: 48px;
+    line-height: 57.6px;
+}
+
+.contact-section p {
+    font-size: 20px;
+    line-height: 30px;
+}

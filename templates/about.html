@@ -3,67 +3,24 @@
 {% block title %} Sulat Aian | About {% endblock %}
 
 {% block content %}
-<div class="view-post-section container pt-4 mt-5">
-    <div class="row justify-content-evenly">
-        <div class="col-lg-8">
+    <div class="about-section container pt-4 mt-5 ">
+        <div class="row col-md-8 m-auto">
             <div class="card bg-transparent post-item border-0 mb-5">
-                <img class="card-img-top rounded-0" src="{{ post.img_url }}" alt="post-image">
+                <img class="card-img-top rounded-0" src="{{ url_for('static', filename='img/author.jpg') }}" alt="post-image">
                 <div class="card-body px-0">
-                    <h2 class="card-title">
-                        <span class="pe-5" style="font-size: 3rem;">{{ post.title }}</span>
-                    </h2>
-                    <ul class="post-meta mt-3">
-                        <li class="d-inline-block me-3">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            <span class="ms-1 post-date" href="#">{{ post.date }}</span>
-                        </li>
-                        <li class="d-inline-block">
-                            <i class="fa-solid fa-user"></i>
-                            <span class="ms-1 post-author" href="#">{{ post.author.name }}</span>
-                        </li>
-                    </ul>
-                    <p class="card-text my-4 text-dark-emphasis">{{ post.body | safe }}</p>
-                    {% if current_user.id == 1 %}
-                    <a href="{{ url_for('edit_post', post_id=post.id) }}" class="btn px-4 py-2 rounded-0">Edit Post<i class="fa-solid fa-arrow-right ms-2"></i></a>
-                    {% endif %}
-                    <hr class="mt-5 mb-4">
-                    <!-- Comment Section -->
-                    <div class="auth-form">
-                        <form method="POST" action="{{ url_for('view_post', post_id=post.id) }}" novalidate>
-                            {{ form.csrf_token }}
-                            {{ form.comment.label(class="form-label") }}
-                            {{ form.comment(class="form-control rounded-0") }}                     
-                            {% for err in form.comment.errors %}
-                            <span class="text-danger error-handling">{{ err }}</span>
-                            {% endfor %}
-                            <button type="submit" class="btn px-4 py-2 rounded-0 my-3">Comment<i class="fa-solid fa-arrow-right ms-2"></i></button>
-                        </form>
-                    </div>
-                    <!-- All Comments -->
-                    <div class="comment">
-                        {% for comment in post.comments %}
-                        <ul class="commentList mt-3">
-                            <li>
-                                <div class="commenterImage">
-                                    <img class="me-1 border border-2" src="{{ comment.comment_author.email | gravatar }}"/>
-                                    <span class="sub-text">{{ comment.comment_author.name}}</span>
-                                </div>
-                                <div class="commentText ps-5 mt-2">
-                                    <p>{{ comment.text | safe}}</p>
-                                </div>
-                            </li>
-                        </ul>
-                        <hr>
-                          {% endfor %}
-                        </div>
+                    <h2 class="card-title mb-3">Hi, I'm Cris-aian Specialized In Blog Writing And Coding</h2>
+                    <p class="text-dark-emphasis">I wanted to learn how to code because I love the idea that technology can solve social problems. I also wanted to have the skills to be able to create any app or website imaginable! I came to this career path in a non-traditional way, as I studied the humanities in college. I completed a PhD in history and actually thought I was going to be a history professor! My dissertation explored the impacts of US militarism on women in the Philippines. If you're interested, feel free to check out my article on the topic.
+                    </p>
+                    <p class="text-dark-emphasis">
+                    While I really enjoyed academic research, I also felt like something was missing for me. Much of the work I was doing felt abstract, and it would take many years to see results (historians often spend decades working on a project before it gets published). This is what eventually led me to pursue UX design at first, which then propelled me into the world of web development.
+                    </p>
+                    <p class="text-dark-emphasis">
+                    I don't see myself as starting over in my career, but rather building on my previous work with a more technical skill set. In my academic projects, I wanted to make a positive impact through research. I hope to do the same through creating apps and websites that focus on addressing user needs and solving problems.
+                    </p>
                 </div>
                 <!-- End of Card Body -->
             </div>
-            <!-- End of Card -->
         </div>
-        <!-- End of Col 7 -->
     </div>
-    <!-- End of Row -->
-</div>
-<!-- End of View Post Section -->
+    <!-- End of Home Section -->
 {% endblock %}

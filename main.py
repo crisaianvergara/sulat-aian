@@ -1,7 +1,14 @@
 from flask import Flask, render_template, redirect, url_for, flash, abort
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bootstrap import Bootstrap
-from forms import LoginForm, RegisterForm, CreatePostForm, CommentForm, SubscriberForm
+from forms import (
+    LoginForm,
+    RegisterForm,
+    CreatePostForm,
+    CommentForm,
+    SubscriberForm,
+    ContactForm,
+)
 from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
@@ -300,13 +307,17 @@ def blog():
 # About
 @app.route("/about")
 def about():
-    render_template("about.html")
+    return render_template("about.html")
 
 
 # Contact
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
-    render_template("contact.html")
+    form = ContactForm()
+    if form.validate_on_submit():
+        flash("Message sent.", "green")
+        return redirect(url_for("contact"))
+    return render_template("contact.html", form=form)
 
 
 # Run Flask

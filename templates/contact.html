@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %} Sulat Aian | Contact {% endblock %}
+
+{% block content %}
+    <div class="contact-section container pt-4 mt-5 ">
+        <div class="card m-auto border-0 bg-transparent auth-form">
+            <div class="card-body">
+                <h1>Want to get in touch?</h1>
+                <p class="w-50 mb-5 text-dark-emphasis">
+                    Fill out the form below to send me a message and I will get back to you as soon as possible!
+                </p>
+                <form method="POST" action="{{ url_for('contact') }}" novalidate>
+                    {{ form.csrf_token }}
+                    <div class="mb-3">
+                        {{ form.name.label(class="form-label") }}
+                        {{ form.name(class="form-control bg-transparent rounded-0 border-bottom shadow-none border-dark-subtle pb-15 px-0") }}
+                        {% for err in form.name.errors %}
+                        <span class="text-danger error-handling">{{ err }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.email.label(class="form-label") }}
+                        {{ form.email(class="form-control bg-transparent rounded-0 border-bottom shadow-none border-dark-subtle pb-15 px-0") }}
+                        {% for err in form.email.errors %}
+                        <span class="text-danger error-handling">{{ err }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.phone_number.label(class="form-label") }}
+                        {{ form.phone_number(class="form-control bg-transparent rounded-0 border-bottom shadow-none border-dark-subtle pb-15 px-0") }}
+                        {% for err in form.phone_number.errors %}
+                        <span class="text-danger error-handling">{{ err }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.message.label(class="form-label") }}
+                        {{ form.message(class="form-control bg-transparent rounded-0 border-bottom border-dark-subtle shadow-none pb-15 px-0") }}                     
+                        {% for err in form.message.errors %}
+                        <span class="text-danger error-handling">{{ err }}</span>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" class="btn btn-success px-4 py-2 rounded-0">Send Now<i class="fa-solid fa-arrow-right ms-2"></i></button>
+                </form>
+            </div>
+        </div>   
+    </div>
+    <!-- End of Home Section -->
+{% endblock %}

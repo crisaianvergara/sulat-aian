@@ -11,21 +11,21 @@
                 {{ form.csrf_token }}
                 <div class="mb-3">
                     {{ form.title.label(class="form-label") }}
-                    {{ form.title(class="form-control bg-transparent rounded-0 border-bottom shadow-none pb-15 px-0") }}
+                    {{ form.title(class="form-control bg-transparent rounded-0 border-bottom shadow-none pb-15 px-0 border-dark-subtle") }}
                     {% for err in form.title.errors %}
                     <span class="text-danger error-handling">{{ err }}</span>
                     {% endfor %}
                 </div>
                 <div class="mb-3">
                     {{ form.subtitle.label(class="form-label") }}
-                    {{ form.subtitle(class="form-control bg-transparent rounded-0 border-bottom shadow-none pb-15 px-0") }}
+                    {{ form.subtitle(class="form-control bg-transparent rounded-0 border-bottom shadow-none pb-15 px-0 border-dark-subtle") }}
                     {% for err in form.subtitle.errors %}
                     <span class="text-danger error-handling">{{ err }}</span>
                     {% endfor %}
                 </div>
                 <div class="mb-3">
                     {{ form.img_url.label(class="form-label") }}
-                    {{ form.img_url(class="form-control bg-transparent rounded-0 border-bottom shadow-none pb-15 px-0") }}
+                    {{ form.img_url(class="form-control bg-transparent rounded-0 border-bottom shadow-none pb-15 px-0 border-dark-subtle") }}
                     {% for err in form.img_url.errors %}
                     <span class="text-danger error-handling">{{ err }}</span>
                     {% endfor %}

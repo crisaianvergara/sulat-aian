@@ -32,7 +32,7 @@
                         <form method="POST" action="{{ url_for('view_post', post_id=post.id) }}" novalidate>
                             {{ form.csrf_token }}
                             {{ form.comment.label(class="form-label") }}
-                            {{ form.comment(class="form-control rounded-0") }}                     
+                            {{ form.comment(class="form-control bg-transparent rounded-0 border-bottom shadow-none border-dark-subtle pb-15 px-0") }}                     
                             {% for err in form.comment.errors %}
                             <span class="text-danger error-handling">{{ err }}</span>
                             {% endfor %}

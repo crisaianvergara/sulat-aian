@@ -58,7 +58,6 @@ class CommentForm(FlaskForm):
     comment = TextAreaField(
         "Comment",
         validators=[DataRequired()],
-        render_kw={"placeholder": "Write a comment"},
     )
     submit = SubmitField("Comment")
 
@@ -69,3 +68,13 @@ class SubscriberForm(FlaskForm):
         validators=[DataRequired(), Email()],
         render_kw={"placeholder": "Enter your email"},
     )
+
+
+# Contact Form
+class ContactForm(FlaskForm):
+    name = StringField(
+        "Full Name", validators=[DataRequired(), validators.length(min=5, max=50)]
+    )
+    email = StringField("Email Address", validators=[DataRequired(), Email()])
+    phone_number = StringField("Phone Number", validators=[DataRequired()])
+    message = TextAreaField("Your Message", validators=[DataRequired()])
