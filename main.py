@@ -25,10 +25,12 @@ from flask_login import (
     AnonymousUserMixin,
 )
 from sqlalchemy import desc
+import smtplib
+import os
 
 # Flask App
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "this_is_a_secret_key"
+app.config["SECRET_KEY"] = os.environ.get("FLASK_SECRET_KEY")
 Bootstrap(app)
 ckeditor = CKEditor(app)
 
@@ -124,6 +126,30 @@ def admin_only(f):
         return f(*args, **kwargs)
 
     return decorated_function
+
+
+# My Info
+MY_EMAIL = os.environ.get("MY_EMAIL_SUPER")
+MY_PASSWORD = os.environ.get("MY_PASSWORD_YAHOO")
+MY_NAME = os.environ.get("MY_NAME_YAHOO")
+MY_RECIPIENT = os.environ.get("MY_RECIPIENT_YAHOO")
+
+
+# Function Send Message
+def send_message(name, email, phone, message):
+    message = (
+        f'From: "{MY_NAME}" <{MY_EMAIL}>\n'
+        f"To: {MY_RECIPIENT}\n"
+        f"Subject: Message From Your Website\n\n"
+        f"Name: {name}\nEmail: {email}\nPhone: {phone}\nMessage: {message}".encode(
+            "utf-8"
+        )
+    )
+
+    with smtplib.SMTP("smtp.mail.yahoo.com", port=587) as connection:
+        connection.starttls()
+        connection.login(user=MY_EMAIL, password=MY_PASSWORD)
+        connection.sendmail(from_addr=MY_EMAIL, to_addrs=MY_RECIPIENT, msg=message)
 
 
 # Home
@@ -315,6 +341,9 @@ def about():
 def contact():
     form = ContactForm()
     if form.validate_on_submit():
+        send_message(
+            form.name.data, form.email.data, form.phone_number.data, form.message.data
+        )
         flash("Message sent.", "green")
         return redirect(url_for("contact"))
     return render_template("contact.html", form=form)
