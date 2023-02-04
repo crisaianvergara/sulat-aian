@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, validators, TextAreaField
-from wtforms.validators import DataRequired, Email, URL
+from wtforms import StringField, SubmitField, PasswordField, TextAreaField
+from wtforms.validators import DataRequired, Email, URL, Length, EqualTo
 from flask_ckeditor import CKEditorField
 
 # Login Form
@@ -12,7 +12,7 @@ class LoginForm(FlaskForm):
     )
     password = PasswordField(
         "Password",
-        validators=[DataRequired(), validators.Length(min=8, max=20)],
+        validators=[DataRequired(), Length(min=8)],
         render_kw={"placeholder": "Enter your password"},
     )
     submit = SubmitField("Sign In")
@@ -22,7 +22,7 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     name = StringField(
         "Name",
-        validators=[DataRequired(), validators.length(min=3, max=50)],
+        validators=[DataRequired(), Length(min=2, max=50)],
         render_kw={"placeholder": "Enter your name"},
     )
     email = StringField(
@@ -32,7 +32,12 @@ class RegisterForm(FlaskForm):
     )
     password = PasswordField(
         "Password",
-        validators=[DataRequired(), validators.Length(min=8, max=20)],
+        validators=[DataRequired(), Length(min=8)],
+        render_kw={"placeholder": "Enter your password"},
+    )
+    confirm_password = PasswordField(
+        "Confirm Password",
+        validators=[DataRequired(), Length(min=8), EqualTo("password")],
         render_kw={"placeholder": "Enter your password"},
     )
     submit = SubmitField("Sign Up")
@@ -41,15 +46,13 @@ class RegisterForm(FlaskForm):
 # Create Post Form
 class CreatePostForm(FlaskForm):
     title = StringField(
-        "Post Title", validators=[DataRequired(), validators.length(min=5)]
+        "Post Title", validators=[DataRequired(), Length(min=2, max=60)]
     )
     subtitle = StringField(
-        "Post Subtitle", validators=[DataRequired(), validators.Length(min=5)]
+        "Post Subtitle", validators=[DataRequired(), Length(min=2, max=60)]
     )
     img_url = StringField("Post Image URL", validators=[DataRequired(), URL()])
-    body = CKEditorField(
-        "Post Content", validators=[DataRequired(), validators.Length(min=50)]
-    )
+    body = CKEditorField("Post Content", validators=[DataRequired(), Length(min=30)])
     submit = SubmitField("Publish")
 
 
@@ -73,9 +76,7 @@ class SubscriberForm(FlaskForm):
 
 # Contact Form
 class ContactForm(FlaskForm):
-    name = StringField(
-        "Full Name", validators=[DataRequired(), validators.length(min=5, max=50)]
-    )
+    name = StringField("Full Name", validators=[DataRequired(), Length(min=2, max=50)])
     email = StringField("Email Address", validators=[DataRequired(), Email()])
     phone_number = StringField("Phone Number", validators=[DataRequired()])
-    message = TextAreaField("Your Message", validators=[DataRequired()])
+    message = TextAreaField("Your Message", validators=[DataRequired(), Length(min=10)])

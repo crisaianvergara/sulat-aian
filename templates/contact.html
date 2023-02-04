@@ -11,7 +11,7 @@
                     Fill out the form below to send me a message and I will get back to you as soon as possible!
                 </p>
                 <!-- Form -->
-                <form method="POST" action="{{ url_for('contact') }}" novalidate>
+                <form method="POST" action="{{ url_for('contact') }}" novalidate class="pb-5 mb-5">
                     {{ form.csrf_token }}
                     <div class="mb-3">
                         {{ form.name.label(class="form-label") }}

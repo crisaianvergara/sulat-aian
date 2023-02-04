@@ -33,6 +33,13 @@
                         <span class="text-danger error-handling">{{ err }}</span>
                         {% endfor %}
                     </div>
+                    <div class="mb-3">
+                        {{ form.confirm_password.label(class="form-label") }}
+                        {{ form.confirm_password(class="form-control rounded-0") }}
+                        {% for err in form.confirm_password.errors %}
+                        <span class="text-danger error-handling">{{ err }}</span>
+                        {% endfor %}
+                    </div>
                     <button type="submit" class="btn btn-success px-4 py-2 rounded-0">Sign Up<i class="fa-solid fa-arrow-right ms-2"></i></button>
                 </form>
                 <!-- End of Form -->
