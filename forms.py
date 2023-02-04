@@ -46,10 +46,10 @@ class RegisterForm(FlaskForm):
 # Create Post Form
 class CreatePostForm(FlaskForm):
     title = StringField(
-        "Post Title", validators=[DataRequired(), Length(min=2, max=60)]
+        "Post Title", validators=[DataRequired(), Length(min=2, max=100)]
     )
     subtitle = StringField(
-        "Post Subtitle", validators=[DataRequired(), Length(min=2, max=60)]
+        "Post Subtitle", validators=[DataRequired(), Length(min=2, max=100)]
     )
     img_url = StringField("Post Image URL", validators=[DataRequired(), URL()])
     body = CKEditorField("Post Content", validators=[DataRequired(), Length(min=30)])

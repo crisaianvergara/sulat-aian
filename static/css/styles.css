@@ -223,3 +223,12 @@ p.post-body {
 .comment-text {
     font-size: 0.875rem;
 }
+
+.dropdown-toggle::after {
+    content: none;
+}
+
+.comment-functions li a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+}

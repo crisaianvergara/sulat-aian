@@ -45,14 +45,25 @@
                         <!-- All Comments -->
                         <div class="comment">
                             {% for comment in post.comments %}
-                                <ul class="commentList mt-3">
-                                    <li>
-                                        <div class="commenter-image d-inline-block align-top">
-                                            <img class="me-2 border border-2" src="{{ comment.comment_author.email | gravatar }}"/>
-                                        </div>
-                                        <div class="d-inline-block">
-                                            <span class="sub-text">{{ comment.comment_author.name}}</span>
-                                            <p class="comment-text">{{ comment.text | safe}}</p>
+                                <ul class="commentList mt-3 d-flex">
+                                    <li class="">
+                                        <img class="me-2 border border-2" src="{{ comment.comment_author.email | gravatar }}"/>
+                                    </li>
+                                    <li class="ms-2">
+                                        <span class="sub-text">{{ comment.comment_author.name}}</span>
+                                        <p class="comment-text">{{ comment.text | safe}}</p>
+                                    </li>
+                                    <li class="ms-auto">
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical pt-3"></i></a>
+                                            <ul class="dropdown-menu comment-functions py-0">
+                                                {% if current_user == 1 or current_user.id == comment.comment_author.id %}
+                                                <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                <li><a class="dropdown-item" href="{{ url_for('delete_comment', comment_id = comment.id, post_id = post.id) }}">Delete</a></li>
+                                                {% else %}
+                                                <li><a class="dropdown-item" href="">Report</a></li>
+                                                {% endif %}
+                                            </ul>
                                         </div>
                                     </li>
                                 </ul>

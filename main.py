@@ -134,20 +134,30 @@ MY_RECIPIENT = os.environ.get("MY_RECIPIENT_YAHOO")
 
 
 # Function Send Message
-def send_message(name, email, phone, message):
-    message = (
-        f'From: "{MY_NAME}" <{MY_EMAIL}>\n'
-        f"To: {MY_RECIPIENT}\n"
-        f"Subject: Message From Your Website\n\n"
-        f"Name: {name}\nEmail: {email}\nPhone: {phone}\nMessage: {message}".encode(
-            "utf-8"
+def send_message(name, email, phone, message, recipient):
+    if message == "notify":
+        message = (
+            f'From: "{MY_NAME}" <{MY_EMAIL}>\n'
+            f"To: {recipient}\n"
+            f"Subject: New Blog Alert!\n\n"
+            f"I have published a new blog post. It's packed with valuable insights and information. Check it out.".encode(
+                "utf-8"
+            )
         )
-    )
+    else:
+        message = (
+            f'From: "{MY_NAME}" <{MY_EMAIL}>\n'
+            f"To: {recipient}\n"
+            f"Subject: Message From Your Website\n\n"
+            f"Name: {name}\nEmail: {email}\nPhone: {phone}\nMessage: {message}".encode(
+                "utf-8"
+            )
+        )
 
     with smtplib.SMTP("smtp.mail.yahoo.com", port=587) as connection:
         connection.starttls()
         connection.login(user=MY_EMAIL, password=MY_PASSWORD)
-        connection.sendmail(from_addr=MY_EMAIL, to_addrs=MY_RECIPIENT, msg=message)
+        connection.sendmail(from_addr=MY_EMAIL, to_addrs=recipient, msg=message)
 
 
 # Home
@@ -193,6 +203,10 @@ def new_post():
         )
         db.session.add(new_post)
         db.session.commit()
+        # Notify Subscribers
+        subscribers = Subscribers.query.all()
+        for subscriber in subscribers:
+            send_message("", "", "", "notify", subscriber.email)
         flash("You're story successfully published.", "green")
         return redirect(url_for("home"))
     return render_template(
@@ -263,11 +277,21 @@ def edit_post(post_id):
 @app.route("/delete/<int:post_id>")
 @admin_only
 def delete(post_id):
-    post_to_delete = BlogPost.query.get(post_id)
+    post_to_delete = BlogPost.query.get_or_404(post_id)
     db.session.delete(post_to_delete)
     db.session.commit()
     flash("Post successfully deleted.", "green")
     return redirect(url_for("home"))
+
+
+# Delete Comment
+@app.route("/delete-comment/<int:comment_id>/<post_id>")
+def delete_comment(comment_id, post_id):
+    comment_to_delete = Comment.query.get_or_404(comment_id)
+    db.session.delete(comment_to_delete)
+    db.session.commit()
+    flash("Comment successfully deleted.", "green")
+    return redirect(url_for("view_post", post_id=post_id))
 
 
 # Login
@@ -347,7 +371,11 @@ def contact():
     form = ContactForm()
     if form.validate_on_submit():
         send_message(
-            form.name.data, form.email.data, form.phone_number.data, form.message.data
+            form.name.data,
+            form.email.data,
+            form.phone_number.data,
+            form.message.data,
+            MY_RECIPIENT,
         )
         flash("Message sent.", "green")
         return redirect(url_for("contact"))
