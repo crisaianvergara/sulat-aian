@@ -1,15 +1,16 @@
 {% extends "base.html" %}
-
-{% block title %} Sulat Aian | Contact {% endblock %}
-
 {% block content %}
-    <div class="contact-section container pt-4 mt-5 ">
-        <div class="card m-auto border-0 bg-transparent auth-form">
+    <!-- Section Contact -->
+    <section id="contact-section">
+        <!-- Card -->
+        <div class="card m-auto border-0 bg-transparent">
+            <!-- Card Body -->
             <div class="card-body">
                 <h1>Want to get in touch?</h1>
                 <p class="w-50 mb-5 text-dark-emphasis">
                     Fill out the form below to send me a message and I will get back to you as soon as possible!
                 </p>
+                <!-- Form -->
                 <form method="POST" action="{{ url_for('contact') }}" novalidate>
                     {{ form.csrf_token }}
                     <div class="mb-3">
@@ -42,8 +43,11 @@
                     </div>
                     <button type="submit" class="btn btn-success px-4 py-2 rounded-0">Send Now<i class="fa-solid fa-arrow-right ms-2"></i></button>
                 </form>
+                <!-- End of Form -->
             </div>
-        </div>   
-    </div>
-    <!-- End of Home Section -->
+            <!-- End of Card Body -->
+        </div>
+        <!-- End of Card Body -->
+    </section>
+    <!-- End of Section Contact -->
 {% endblock %}

@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %} {% endblock %}</title>
+    <!-- Page Title -->
+    {% if title %}
+        <title> Sulat Aian - {{ title }} </title>
+    {% else %}
+        <title> Sulat Aian - Home </title>
+    {% endif %}
+    <!-- End of Title -->
     <!-- Bootstrap 5 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <!-- My Styles -->
@@ -17,52 +23,57 @@
 <body>
     <!-- Nav Bar -->
     <nav class="navbar navbar-dark navbar-expand-lg">
-    <div class="container">
-        <a class="navbar-brand" href="{{ url_for('home') }}">
-            <i class="fa-solid fa-feather"></i>
-            <span class="ps-1">SULAT AIAN</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-            <!-- Check user if authenticated -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('home') }}">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('blog') }}">Blog</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('about') }}">About</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
-            </li>
-            <li class="nav-item dropdown ms-4">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-user"></i>
-                </a>
-                <ul class="dropdown-menu py-0">
-                    {% if current_user.is_authenticated %}
-                        <li><span class="dropdown-item current-user">{{ current_user.name }}</span></li>
-                        <li><hr class="dropdown-divider my-0"></li>
-                            {% if current_user.id == 1 %}
-                                <li><a class="dropdown-item" href="{{ url_for('new_post') }}">Write</a></li>
+        <div class="container">
+            <!-- Brand -->
+            <a class="navbar-brand" href="{{ url_for('home') }}">
+                <i class="fa-solid fa-feather"></i>
+                <span class="ps-1">SULAT AIAN</span>
+            </a>
+            <!-- End of Brand -->
+            <!-- Burger Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- End of Burger Button -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Check user if authenticated -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('blog') }}">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('about') }}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+                    </li>
+                    <li class="nav-item dropdown ms-4">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-user"></i>
+                        </a>
+                        <ul class="dropdown-menu py-0">
+                            {% if current_user.is_authenticated %}
+                                <li><span class="dropdown-item current-user">{{ current_user.name }}</span></li>
+                                <li><hr class="dropdown-divider my-0"></li>
+                                    {% if current_user.id == 1 %}
+                                        <li><a class="dropdown-item" href="{{ url_for('new_post') }}">Write</a></li>
+                                    {% endif %}
+                                <li><a class="dropdown-item" href="{{ url_for('logout') }}">Sign Out</a></li>
+                            {% else %}
+                                <li><a class="dropdown-item" href="{{ url_for('login') }}">Sign In</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('register') }}">Create Account</a></li>
                             {% endif %}
-                        <li><a class="dropdown-item" href="{{ url_for('logout') }}">Sign Out</a></li>
-                    {% else %}
-                        <li><a class="dropdown-item" href="{{ url_for('login') }}">Sign In</a></li>
-                        <li><a class="dropdown-item" href="{{ url_for('register') }}">Create Account</a></li>
-                    {% endif %}
+                        </ul>
+                    </li>
                 </ul>
-              </li>
-        </ul>
+            </div>
         </div>
-    </div>
     </nav>
-    <!-- Alert On -->
+    <!-- End if Nav Bar -->
+    <!-- Flash -->
     {% with messages = get_flashed_messages(with_categories = true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -81,7 +92,13 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
+    <!-- End of Flash -->
+    <!-- Content -->
+    <div class="container pt-4 mt-5">
     {% block content %} {% endblock %}
+    </div>
+    <!-- End of Content -->
+    <!-- Footer -->
     <footer id="footer" class="text-center mt-5 pt-5 pb-3">
         <hr id="footer-hr" class="mb-5">
         <ul class="pb-1">
@@ -92,6 +109,7 @@
         </ul>
         <p class="text-dark-emphasis">Copyright © Sulat Aian <span id="year">current year</span></p>
     </footer>
+    <!-- End of Footer -->
     <!-- Bootstrap Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- My Scripts -->

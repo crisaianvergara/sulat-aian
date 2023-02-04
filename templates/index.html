@@ -1,58 +1,62 @@
 {% extends "base.html" %}
-
-{% block title %} Sulat Aian | Home {% endblock %}
-
 {% block content %}
-    <div class="home-section container pt-4 mt-5">
+    <!-- Section Home -->
+    <section id="home-section">
+        <!-- Row -->
         <div class="row justify-content-evenly">
+            <!-- Column 1 -->
             <div class="col-lg-8">
                 {% for post in posts %}
-                <div class="card bg-transparent post-item border-0 mb-5">
-                    <a class="post-hover" href="{{ url_for('view_post', post_id = post.id) }}">
-                        <img class="card-img-top rounded-0" src="{{ post.img_url }}" alt="post-image">
-                    </a>
-                    <div class="card-body px-0">
-                        <h2 class="card-title">
-                            <a class="post-hover" href="{{ url_for('view_post', post_id = post.id) }}">{{ post.title }}</a>
-                        </h2>
-                        <ul class="post-meta mt-3">
-                            <li class="d-inline-block me-3">
-                                <i class="fa-solid fa-calendar-days"></i>
-                                <span class="ms-1 post-date">{{ post.date }}</span>
-                            </li>
-                            <li class="d-inline-block">
-                                <i class="fa-solid fa-user"></i>
-                                <span class="ms-1 post-author">{{ post.author.name }}</span>
-                            </li>
-                        </ul>
-                        <p class="card-text post-body my-4 text-dark-emphasis">{{ post.body | striptags }}</p>
-                        <a href="{{ url_for('view_post', post_id = post.id) }}" class="btn px-4 py-2 rounded-0">Read More<i class="fa-solid fa-arrow-right ms-2"></i></a>
-                        {% if current_user.id == 1 %}
-                        <a href="{{ url_for('delete', post_id = post.id) }}" class="btn ms-2 px-4 py-2 rounded-0">Delete<i class="fa-solid fa-arrow-right ms-2"></i></a>
-                        {% endif %}
+                    <div class="card bg-transparent post-item border-0 mb-5">
+                        <a class="post-hover" href="{{ url_for('view_post', post_id = post.id) }}">
+                            <img class="card-img-top rounded-0" src="{{ post.img_url }}" alt="post-image">
+                        </a>
+                        <div class="card-body px-0">
+                            <h2 class="card-title">
+                                <a class="post-hover" href="{{ url_for('view_post', post_id = post.id) }}">{{ post.title }}</a>
+                            </h2>
+                            <ul class="post-meta mt-3">
+                                <li class="d-inline-block me-3">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    <span class="ms-1 post-info">{{ post.date }}</span>
+                                </li>
+                                <li class="d-inline-block">
+                                    <i class="fa-solid fa-user"></i>
+                                    <span class="ms-1 post-info">{{ post.author.name }}</span>
+                                </li>
+                            </ul>
+                            <p class="card-text post-body my-4 text-dark-emphasis">{{ post.body | striptags }}</p>
+                            <a href="{{ url_for('view_post', post_id = post.id) }}" class="btn px-4 py-2 rounded-0">Read More<i class="fa-solid fa-arrow-right ms-2"></i></a>
+                            <!-- Check Current User -->
+                            {% if current_user.id == 1 %}
+                            <a href="{{ url_for('delete', post_id = post.id) }}" class="btn ms-2 px-4 py-2 rounded-0">Delete<i class="fa-solid fa-arrow-right ms-2"></i></a>
+                            {% endif %}
+                        </div>
+                        <!-- End of Card Body -->
                     </div>
-                    <!-- End of Card Body -->
-                </div>
                 {% endfor %}
                 <!-- End of Card -->
             </div>
-            <!-- End of Col 7 -->
+            <!-- End of Column 1 -->
+            <!-- Column 2 -->
             <div class="col-lg-3">
+                <!-- Twitter -->
                 <div class="widget">
-                <blockquote class="twitter-tweet">
-                    <p lang="en" dir="ltr">Sunsets don&#39;t get much better than this one over 
-                        <a href="https://twitter.com/GrandTetonNPS?ref_src=twsrc%5Etfw">@GrandTetonNPS</a>
-                        . 
-                        <a href="https://twitter.com/hashtag/nature?src=hash&amp;ref_src=twsrc%5Etfw">#nature</a> 
-                        <a href="https://twitter.com/hashtag/sunset?src=hash&amp;ref_src=twsrc%5Etfw">#sunset</a> 
-                        <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a>
-                    </p>
-                    &mdash; US Department of the Interior (@Interior) 
-                    <a href="https://twitter.com/Interior/status/463440424141459456?ref_src=twsrc%5Etfw">May 5, 2014</a>
-                </blockquote>
-                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <blockquote class="twitter-tweet">
+                        <p lang="en" dir="ltr">Sunsets don&#39;t get much better than this one over 
+                            <a href="https://twitter.com/GrandTetonNPS?ref_src=twsrc%5Etfw">@GrandTetonNPS</a>
+                            . 
+                            <a href="https://twitter.com/hashtag/nature?src=hash&amp;ref_src=twsrc%5Etfw">#nature</a> 
+                            <a href="https://twitter.com/hashtag/sunset?src=hash&amp;ref_src=twsrc%5Etfw">#sunset</a> 
+                            <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a>
+                        </p>
+                        &mdash; US Department of the Interior (@Interior) 
+                        <a href="https://twitter.com/Interior/status/463440424141459456?ref_src=twsrc%5Etfw">May 5, 2014</a>
+                    </blockquote>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 </div>
-                <!-- End of Twitter Widget -->
+                <!-- End of Twitter -->
+                <!-- Social Links -->
                 <div class="widget text-center">
                     <ul>
                         <li class="d-inline-block"><a href="https://www.linkedin.com/in/crisaianvergara/" target="_blank"><i class="fa-brands fa-linkedin fa-2xl mx-2"></i></a></li>
@@ -62,6 +66,7 @@
                     </ul>
                 </div>
                 <!-- End of Social Links -->
+                <!-- Subscribe -->
                 <div class="widget widget-bg p-4 text-center">
                     <h2 class="widget-title d-inline-block mt-4">Subscribe</h2>
                     <p class="mt-4 text-dark-emphasis">Get exclusive content and stay ahead of the curve. Subscribe to Sulat Aian and be the first to receive fresh ideas and insights.</p>
@@ -76,40 +81,41 @@
                         </div>
                     </form>
                 </div>
-                <!-- End of Subscription Widget -->
+                <!-- End of Subscribe -->
+                <!-- Popular Posts -->
                 <div class="widget">
                     <div class="mb-3 text-center">
                         <h2 class="widget-title">Popular Posts</h2>
                     </div>
                     {% for post in limit_two %}
-                    <div class="card bg-transparent post-item border-0 mb-3">
-                        <a class="post-hover" href="{{ url_for('view_post', post_id = post.id) }}">
-                            <img class="card-img-top rounded-0" src="{{ post.img_url }}" alt="">
-                        </a>
-                        <div class="card-body px-0">
-                            <h4 class="card-title">
-                                <a class="post-hover" href="{{ url_for('view_post', post_id = post.id) }}">{{ post.title }}</a>
-                            </h4>
-                            <ul class="post-meta mt-3 mb-4">
-                                <li class="d-inline-block me-3">
-                                    <i class="fa-solid fa-calendar-days"></i>
-                                    <span class="ms-1 post-date">{{ post.date }}</span>
-                                </li>
-                                <li class="d-inline-block">
-                                    <i class="fa-solid fa-user"></i>
-                                    <span class="ms-1 post-author">{{ post.author.name }}</span>
-                                </li>
-                            </ul>
-                            <a href="{{ url_for('view_post', post_id = post.id) }}" class="btn btn-success px-4 py-2 rounded-0">Read More<i class="fa-solid fa-arrow-right ms-2"></i></a>
+                        <div class="card bg-transparent post-item border-0 mb-3">
+                            <a class="post-hover" href="{{ url_for('view_post', post_id = post.id) }}">
+                                <img class="card-img-top rounded-0" src="{{ post.img_url }}" alt="">
+                            </a>
+                            <div class="card-body px-0">
+                                <h4 class="card-title">
+                                    <a class="post-hover" href="{{ url_for('view_post', post_id = post.id) }}">{{ post.title }}</a>
+                                </h4>
+                                <ul class="post-meta mt-3 mb-4">
+                                    <li class="d-inline-block me-3">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                        <span class="ms-1 post-info">{{ post.date }}</span>
+                                    </li>
+                                    <li class="d-inline-block">
+                                        <i class="fa-solid fa-user"></i>
+                                        <span class="ms-1 post-info">{{ post.author.name }}</span>
+                                    </li>
+                                </ul>
+                                <a href="{{ url_for('view_post', post_id = post.id) }}" class="btn btn-success px-4 py-2 rounded-0">Read More<i class="fa-solid fa-arrow-right ms-2"></i></a>
+                            </div>
                         </div>
-                    </div>
                     {% endfor %}
                 </div>
                 <!-- End of Popular Widget -->
             </div>
-            <!-- End of Col 4 -->
+            <!-- End of Column 2-->
         </div>
         <!-- End of Row -->
-    </div>
+    </section>
     <!-- End of Home Section -->
 {% endblock %}

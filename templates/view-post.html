@@ -1,69 +1,72 @@
 {% extends "base.html" %}
-
-{% block title %} Sulat Aian | View Post {% endblock %}
-
 {% block content %}
-<div class="view-post-section container pt-4 mt-5">
-    <div class="row justify-content-evenly">
-        <div class="col-lg-8">
-            <div class="card bg-transparent post-item border-0 mb-5">
-                <img class="card-img-top rounded-0" src="{{ post.img_url }}" alt="post-image">
-                <div class="card-body px-0">
-                    <h2 class="card-title">
-                        <span class="pe-5" style="font-size: 3rem;">{{ post.title }}</span>
-                    </h2>
-                    <ul class="post-meta mt-3">
-                        <li class="d-inline-block me-3">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            <span class="ms-1 post-date" href="#">{{ post.date }}</span>
-                        </li>
-                        <li class="d-inline-block">
-                            <i class="fa-solid fa-user"></i>
-                            <span class="ms-1 post-author" href="#">{{ post.author.name }}</span>
-                        </li>
-                    </ul>
-                    <p class="card-text my-4 text-dark-emphasis">{{ post.body | safe }}</p>
-                    {% if current_user.id == 1 %}
-                    <a href="{{ url_for('edit_post', post_id=post.id) }}" class="btn px-4 py-2 rounded-0">Edit Post<i class="fa-solid fa-arrow-right ms-2"></i></a>
-                    {% endif %}
-                    <hr class="mt-5 mb-4">
-                    <!-- Comment Section -->
-                    <div class="auth-form">
-                        <form method="POST" action="{{ url_for('view_post', post_id=post.id) }}" novalidate>
+    <!-- Section View Post -->
+    <section id="view-post-section">
+        <!-- Row -->
+        <div class="row justify-content-evenly">
+            <!-- Column -->
+            <div class="col-lg-8">
+                <!-- Card -->
+                <div class="card bg-transparent post-item border-0 mb-5">
+                    <!-- Card Image -->
+                    <img class="card-img-top rounded-0" src="{{ post.img_url }}" alt="post-image">
+                    <!-- End of Card Image -->
+                    <!-- Card Body -->
+                    <div class="card-body px-0">
+                        <!-- Card Title -->
+                        <h2 class="card-title">
+                            <span class="pe-5" style="font-size: 3rem;">{{ post.title }}</span>
+                        </h2>
+                        <!-- End of Card Title -->
+                        <ul class="post-meta mt-3">
+                            <li class="d-inline-block me-3">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <span class="ms-1 post-date" href="#">{{ post.date }}</span>
+                            </li>
+                            <li class="d-inline-block">
+                                <i class="fa-solid fa-user"></i>
+                                <span class="ms-1 post-author" href="#">{{ post.author.name }}</span>
+                            </li>
+                        </ul>
+                        <p class="card-text my-4 text-dark-emphasis">{{ post.body | safe }}</p>
+                        {% if current_user.id == 1 %}
+                            <a href="{{ url_for('edit_post', post_id=post.id) }}" class="btn px-4 py-2 rounded-0">Edit Post<i class="fa-solid fa-arrow-right ms-2"></i></a>
+                        {% endif %}
+                        <!-- Form -->
+                        <form class="mt-5 pt-4" method="POST" action="{{ url_for('view_post', post_id=post.id) }}" novalidate>
                             {{ form.csrf_token }}
-                            {{ form.comment.label(class="form-label") }}
-                            {{ form.comment(class="form-control bg-transparent rounded-0 border-bottom shadow-none border-dark-subtle pb-15 px-0") }}                     
+                            {{ form.comment(class="form-control bg-transparent rounded-0 border-bottom shadow-none border-dark-subtle pb-15 px-1") }}                     
                             {% for err in form.comment.errors %}
                             <span class="text-danger error-handling">{{ err }}</span>
                             {% endfor %}
                             <button type="submit" class="btn px-4 py-2 rounded-0 my-3">Comment<i class="fa-solid fa-arrow-right ms-2"></i></button>
                         </form>
-                    </div>
-                    <!-- All Comments -->
-                    <div class="comment">
-                        {% for comment in post.comments %}
-                        <ul class="commentList mt-3">
-                            <li>
-                                <div class="commenterImage">
-                                    <img class="me-1 border border-2" src="{{ comment.comment_author.email | gravatar }}"/>
-                                    <span class="sub-text">{{ comment.comment_author.name}}</span>
-                                </div>
-                                <div class="commentText ps-5 mt-2">
-                                    <p>{{ comment.text | safe}}</p>
-                                </div>
-                            </li>
-                        </ul>
-                        <hr>
-                          {% endfor %}
+                        <!-- End of Form -->
+                        <!-- All Comments -->
+                        <div class="comment">
+                            {% for comment in post.comments %}
+                                <ul class="commentList mt-3">
+                                    <li>
+                                        <div class="commenter-image d-inline-block align-top">
+                                            <img class="me-2 border border-2" src="{{ comment.comment_author.email | gravatar }}"/>
+                                        </div>
+                                        <div class="d-inline-block">
+                                            <span class="sub-text">{{ comment.comment_author.name}}</span>
+                                            <p class="comment-text">{{ comment.text | safe}}</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            {% endfor %}
                         </div>
+                        <!-- End of All Comments -->
+                    </div>
+                    <!-- End of Card Body -->
                 </div>
-                <!-- End of Card Body -->
+                <!-- End of Card -->
             </div>
-            <!-- End of Card -->
+            <!-- End of Column -->
         </div>
-        <!-- End of Col 7 -->
-    </div>
-    <!-- End of Row -->
-</div>
-<!-- End of View Post Section -->
+        <!-- End of Row -->
+    </section>
+    <!-- End of Section View Post -->
 {% endblock %}

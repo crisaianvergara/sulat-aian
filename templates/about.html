@@ -1,13 +1,16 @@
 {% extends "base.html" %}
-
-{% block title %} Sulat Aian | About {% endblock %}
-
 {% block content %}
-    <div class="about-section container pt-4 mt-5 ">
+    <!-- Section About -->
+    <section id="about-section">
+        <!-- Row -->
         <div class="row col-md-8 m-auto">
-            <div class="card bg-transparent post-item border-0 mb-5">
+            <!-- Card -->
+            <div class="card bg-transparent border-0 mb-5">
+                <!-- Card Image -->
                 <img class="card-img-top rounded-0" src="{{ url_for('static', filename='img/author.jpg') }}" alt="post-image">
+                <!-- Card Body -->
                 <div class="card-body px-0">
+                    <!-- Card Title -->
                     <h2 class="card-title mb-3">Hi, I'm Cris-aian Specialized In Blog Writing And Coding</h2>
                     <p class="text-dark-emphasis">I wanted to learn how to code because I love the idea that technology can solve social problems. I also wanted to have the skills to be able to create any app or website imaginable! I came to this career path in a non-traditional way, as I studied the humanities in college. I completed a PhD in history and actually thought I was going to be a history professor! My dissertation explored the impacts of US militarism on women in the Philippines. If you're interested, feel free to check out my article on the topic.
                     </p>
@@ -20,7 +23,9 @@
                 </div>
                 <!-- End of Card Body -->
             </div>
+            <!-- End of Card -->
         </div>
-    </div>
-    <!-- End of Home Section -->
+        <!-- End of Row -->
+    </section>
+    <!-- End of About Section -->
 {% endblock %}

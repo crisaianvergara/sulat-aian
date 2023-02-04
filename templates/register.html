@@ -1,13 +1,15 @@
 {% extends "base.html" %}
-
-{% block title %} Sulat Aian | Sign Up {% endblock %}
-
 {% block content %}
-<div class="container pt-5 mt-5">
+    <!-- Section Register -->
     <section id="register-section" class="auth-form">
+        <!-- Card -->
         <div class="card col-lg-5 m-auto rounded-0 border-0 shadow auth-form">
+            <!-- Card Header -->
             <h5 class="card-header">Create Account</h5>
+            <!-- End of Card Header -->
+            <!-- Card Body -->
             <div class="card-body">
+                <!-- Form -->
                 <form method="POST" action="{{ url_for('register') }}" novalidate>
                     {{ form.csrf_token }}
                     <div class="mb-3">
@@ -33,8 +35,11 @@
                     </div>
                     <button type="submit" class="btn btn-success px-4 py-2 rounded-0">Sign Up<i class="fa-solid fa-arrow-right ms-2"></i></button>
                 </form>
+                <!-- End of Form -->
             </div>
-        </div>   
+            <!-- End of Card Body -->
+        </div>
+        <!-- End of Card -->
     </section>
-</div>
+    <!-- End of Section Register -->
 {% endblock %}

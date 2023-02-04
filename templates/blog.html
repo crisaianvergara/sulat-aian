@@ -1,37 +1,43 @@
 {% extends "base.html" %}
-
-{% block title %} Sulat Aian | Blog {% endblock %}
-
 {% block content %}
-    <div class="container flex-wrap d-flex justify-content-evenly pt-4 mt-5">
+    <!-- Section Blog -->
+    <section id="blog-section" class="flex-wrap d-flex justify-content-evenly">
         {% for post in posts %}
-                <div class="card bg-transparent post-item border-0 mb-5" style="max-width:550px;">
-                    <a class="post-hover" href="{{ url_for('view_post', post_id = post.id) }}">
-                        <img class="card-img-top rounded-0" src="{{ post.img_url }}" alt="post-image">
-                    </a>
-                    <div class="card-body px-0">
-                        <h2 class="card-title">
-                            <a class="post-hover" href="{{ url_for('view_post', post_id = post.id) }}">{{ post.title }}</a>
-                        </h2>
-                        <ul class="post-meta mt-3">
-                            <li class="d-inline-block me-3">
-                                <i class="fa-solid fa-calendar-days"></i>
-                                <span class="ms-1 post-date">{{ post.date }}</span>
-                            </li>
-                            <li class="d-inline-block">
-                                <i class="fa-solid fa-user"></i>
-                                <span class="ms-1 post-author">{{ post.author.name }}</span>
-                            </li>
-                        </ul>
-                        <p class="card-text post-body my-4 text-dark-emphasis">{{ post.body | striptags }}</p>
-                        <a href="{{ url_for('view_post', post_id = post.id) }}" class="btn px-4 py-2 rounded-0">Read More<i class="fa-solid fa-arrow-right ms-2"></i></a>
-                        {% if current_user.id == 1 %}
+            <!-- Card -->
+            <div class="card bg-transparent post-item border-0 mb-5" style="max-width:550px;">
+                <!-- Post Image -->
+                <a class="post-hover" href="{{ url_for('view_post', post_id = post.id) }}">
+                    <img class="card-img-top rounded-0" src="{{ post.img_url }}" alt="post-image">
+                </a>
+                <!-- End of Post Image -->
+                <!-- Card Body -->
+                <div class="card-body px-0">
+                    <!-- Card Title -->
+                    <h2 class="card-title">
+                        <a class="post-hover" href="{{ url_for('view_post', post_id = post.id) }}">{{ post.title }}</a>
+                    </h2>
+                    <!-- End of Card Title -->
+                    <ul class="post-meta mt-3">
+                        <li class="d-inline-block me-3">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <span class="ms-1 post-info">{{ post.date }}</span>
+                        </li>
+                        <li class="d-inline-block">
+                            <i class="fa-solid fa-user"></i>
+                            <span class="ms-1 post-info">{{ post.author.name }}</span>
+                        </li>
+                    </ul>
+                    <p class="card-text post-body my-4 text-dark-emphasis">{{ post.body | striptags }}</p>
+                    <a href="{{ url_for('view_post', post_id = post.id) }}" class="btn px-4 py-2 rounded-0">Read More<i class="fa-solid fa-arrow-right ms-2"></i></a>
+                    <!-- Check Current User -->
+                    {% if current_user.id == 1 %}
                         <a href="{{ url_for('delete', post_id = post.id) }}" class="btn ms-2 px-4 py-2 rounded-0">Delete<i class="fa-solid fa-arrow-right ms-2"></i></a>
-                        {% endif %}
-                    </div>
-                    <!-- End of Card Body -->
+                    {% endif %}
                 </div>
-                {% endfor %}
-    </div>
-    <!-- End of Home Section -->
+                <!-- End of Card Body -->
+            </div>
+            <!-- End of Card -->
+        {% endfor %}
+    </section>
+    <!-- End of Section Blog -->
 {% endblock %}

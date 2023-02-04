@@ -22,7 +22,7 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     name = StringField(
         "Name",
-        validators=[DataRequired(), validators.length(min=5, max=50)],
+        validators=[DataRequired(), validators.length(min=3, max=50)],
         render_kw={"placeholder": "Enter your name"},
     )
     email = StringField(
@@ -38,13 +38,13 @@ class RegisterForm(FlaskForm):
     submit = SubmitField("Sign Up")
 
 
-# Register Form
+# Create Post Form
 class CreatePostForm(FlaskForm):
     title = StringField(
-        "Post Title", validators=[DataRequired(), validators.length(min=10)]
+        "Post Title", validators=[DataRequired(), validators.length(min=5)]
     )
     subtitle = StringField(
-        "Post Subtitle", validators=[DataRequired(), validators.Length(min=10)]
+        "Post Subtitle", validators=[DataRequired(), validators.Length(min=5)]
     )
     img_url = StringField("Post Image URL", validators=[DataRequired(), URL()])
     body = CKEditorField(
@@ -55,9 +55,10 @@ class CreatePostForm(FlaskForm):
 
 # Comment Form
 class CommentForm(FlaskForm):
-    comment = TextAreaField(
+    comment = StringField(
         "Comment",
         validators=[DataRequired()],
+        render_kw={"placeholder": "Add a comment"},
     )
     submit = SubmitField("Comment")
 

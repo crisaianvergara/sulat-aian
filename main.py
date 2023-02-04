@@ -1,6 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, flash, abort
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_bootstrap import Bootstrap
 from forms import (
     LoginForm,
     RegisterForm,
@@ -31,7 +30,6 @@ import os
 # Flask App
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("FLASK_SECRET_KEY")
-Bootstrap(app)
 ckeditor = CKEditor(app)
 
 # Database
@@ -106,7 +104,7 @@ class Anonymous(AnonymousUserMixin):
         self.id = 0
 
 
-# Logging In
+# Flask Login
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.anonymous_user = Anonymous
@@ -153,6 +151,7 @@ def send_message(name, email, phone, message):
 
 
 # Home
+@app.route("/home", methods=["GET", "POST"])
 @app.route("/", methods=["GET", "POST"])
 def home():
     form = SubscriberForm()
@@ -177,7 +176,6 @@ def home():
     )
 
 
-# Admin Section
 # New Post
 @app.route("/new-post", methods=["GET", "POST"])
 @admin_only
@@ -197,7 +195,9 @@ def new_post():
         db.session.commit()
         flash("You're story successfully published.", "green")
         return redirect(url_for("home"))
-    return render_template("make-post.html", form=form, current_user=current_user)
+    return render_template(
+        "make-post.html", form=form, current_user=current_user, title="New Post"
+    )
 
 
 # View Post and Comment
@@ -224,6 +224,7 @@ def view_post(post_id):
         post=requested_post,
         current_user=current_user,
         form=form,
+        title="View Post",
     )
 
 
@@ -254,6 +255,7 @@ def edit_post(post_id):
         is_edit=True,
         current_user=current_user,
         post_id=post_id,
+        title="Edit Post",
     )
 
 
@@ -268,7 +270,6 @@ def delete(post_id):
     return redirect(url_for("home"))
 
 
-# Admin, Users, And Guest Section
 # Login
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -288,7 +289,9 @@ def login():
             login_user(user)
             flash("You've successfully signed in.", "green")
             return redirect(url_for("home"))
-    return render_template("login.html", form=form, current_user=current_user)
+    return render_template(
+        "login.html", form=form, current_user=current_user, title="Sign In"
+    )
 
 
 # Logout
@@ -320,20 +323,22 @@ def register():
         login_user(new_user)
         flash("You've successfully signed up.", "green")
         return redirect(url_for("home"))
-    return render_template("register.html", form=form, current_user=current_user)
+    return render_template(
+        "register.html", form=form, current_user=current_user, title="Sign Up"
+    )
 
 
 # Blog
 @app.route("/blog")
 def blog():
     posts = BlogPost.query.order_by(desc("id"))
-    return render_template("blog.html", posts=posts)
+    return render_template("blog.html", posts=posts, title="Blog")
 
 
 # About
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    return render_template("about.html", title="About")
 
 
 # Contact
@@ -346,7 +351,7 @@ def contact():
         )
         flash("Message sent.", "green")
         return redirect(url_for("contact"))
-    return render_template("contact.html", form=form)
+    return render_template("contact.html", form=form, title="Contact")
 
 
 # Run Flask

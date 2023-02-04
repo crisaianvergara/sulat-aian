@@ -1,47 +1,51 @@
 {% extends "base.html" %}
-
-{% block title %} Sulat Aian | {% if is_edit %} Edit Post {% else %} New Post {% endif %} {% endblock %}
-
 {% block content %}
-<div class="make-post-section container pt-4 mt-5">
-    <div class="card m-auto border-0 bg-transparent auth-form">
-        <div class="card-body">
-            <form method="POST" 
-            action="{% if is_edit %} {{ url_for('edit_post', post_id=post_id) }} {% else %} {{ url_for('new_post') }} {% endif %}" novalidate>
-                {{ form.csrf_token }}
-                <div class="mb-3">
-                    {{ form.title.label(class="form-label") }}
-                    {{ form.title(class="form-control bg-transparent rounded-0 border-bottom shadow-none pb-15 px-0 border-dark-subtle") }}
-                    {% for err in form.title.errors %}
-                    <span class="text-danger error-handling">{{ err }}</span>
-                    {% endfor %}
-                </div>
-                <div class="mb-3">
-                    {{ form.subtitle.label(class="form-label") }}
-                    {{ form.subtitle(class="form-control bg-transparent rounded-0 border-bottom shadow-none pb-15 px-0 border-dark-subtle") }}
-                    {% for err in form.subtitle.errors %}
-                    <span class="text-danger error-handling">{{ err }}</span>
-                    {% endfor %}
-                </div>
-                <div class="mb-3">
-                    {{ form.img_url.label(class="form-label") }}
-                    {{ form.img_url(class="form-control bg-transparent rounded-0 border-bottom shadow-none pb-15 px-0 border-dark-subtle") }}
-                    {% for err in form.img_url.errors %}
-                    <span class="text-danger error-handling">{{ err }}</span>
-                    {% endfor %}
-                </div>
-                <div class="mb-3">
-                    {{ ckeditor.load() }}
-                    {{ ckeditor.config(name='body') }}
-                    {{ form.body.label(class="form-label") }}
-                    {{ form.body(class="form-control bg-transparent rounded-0 border-bottom shadow-none pb-15 px-0") }}
-                    {% for err in form.body.errors %}
-                    <span class="text-danger error-handling">{{ err }}</span>
-                    {% endfor %}
-                </div>
-                <button type="submit" class="btn btn-success px-4 py-2 rounded-0">Publish<i class="fa-solid fa-arrow-right ms-2"></i></button>
-            </form>
+    <!-- Section Make Post -->
+    <section id="make-post-section">
+        <!-- Card -->
+        <div class="card m-auto border-0 bg-transparent">
+            <!-- Card Body -->
+            <div class="card-body">
+                <!-- Form -->
+                <form method="POST" action="{% if is_edit %} {{ url_for('edit_post', post_id=post_id) }} {% else %} {{ url_for('new_post') }} {% endif %}" novalidate>
+                    {{ form.csrf_token }}
+                    <div class="mb-3">
+                        {{ form.title.label(class="form-label") }}
+                        {{ form.title(class="form-control bg-transparent rounded-0 border-bottom shadow-none pb-15 px-0 border-dark-subtle") }}
+                        {% for err in form.title.errors %}
+                        <span class="text-danger error-handling">{{ err }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.subtitle.label(class="form-label") }}
+                        {{ form.subtitle(class="form-control bg-transparent rounded-0 border-bottom shadow-none pb-15 px-0 border-dark-subtle") }}
+                        {% for err in form.subtitle.errors %}
+                        <span class="text-danger error-handling">{{ err }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.img_url.label(class="form-label") }}
+                        {{ form.img_url(class="form-control bg-transparent rounded-0 border-bottom shadow-none pb-15 px-0 border-dark-subtle") }}
+                        {% for err in form.img_url.errors %}
+                        <span class="text-danger error-handling">{{ err }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        {{ ckeditor.load() }}
+                        {{ ckeditor.config(name='body') }}
+                        {{ form.body.label(class="form-label") }}
+                        {{ form.body(class="form-control bg-transparent rounded-0 border-bottom shadow-none pb-15 px-0") }}
+                        {% for err in form.body.errors %}
+                        <span class="text-danger error-handling">{{ err }}</span>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" class="btn btn-success px-4 py-2 rounded-0">Publish<i class="fa-solid fa-arrow-right ms-2"></i></button>
+                </form>
+                <!-- End of Form -->
+            </div>
+            <!-- End of Card Body -->
         </div>
-    </div>   
-</div>
+        <!-- End of Card -->
+    </section>
+    <!-- End of Section Make Post -->
 {% endblock %}
