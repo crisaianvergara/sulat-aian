@@ -51,10 +51,10 @@
                         <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
                     </li>
                     <li class="nav-item dropdown ms-4">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                         <i class="fa-solid fa-user"></i>
                         </a>
-                        <ul class="dropdown-menu py-0">
+                        <ul class="dropdown-menu py-0 dropdown-menu-lg-end">
                             {% if current_user.is_authenticated %}
                                 <li><span class="dropdown-item current-user">{{ current_user.name }}</span></li>
                                 <li><hr class="dropdown-divider my-0"></li>

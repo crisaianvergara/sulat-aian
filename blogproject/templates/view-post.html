@@ -57,7 +57,10 @@
                                         <div class="dropdown">
                                             <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical pt-3"></i></a>
                                             <ul class="dropdown-menu comment-functions py-0">
-                                                {% if current_user == 1 or current_user.id == comment.comment_author.id %}
+                                                {% if current_user.id == 1 %}
+                                                <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                <li><a class="dropdown-item" href="{{ url_for('delete_comment', comment_id = comment.id, post_id = post.id) }}">Delete</a></li>
+                                                {% elif current_user.id == comment.comment_author.id %}
                                                 <li><a class="dropdown-item" href="#">Edit</a></li>
                                                 <li><a class="dropdown-item" href="{{ url_for('delete_comment', comment_id = comment.id, post_id = post.id) }}">Delete</a></li>
                                                 {% else %}

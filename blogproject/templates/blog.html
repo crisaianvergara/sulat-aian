@@ -4,7 +4,7 @@
     <section id="blog-section" class="flex-wrap d-flex justify-content-evenly">
         {% for post in posts %}
             <!-- Card -->
-            <div class="card bg-transparent post-item border-0 mb-5" style="max-width:550px;">
+            <div class="card bg-transparent post-item border-0 mb-5 px-3" style="max-width:550px;">
                 <!-- Post Image -->
                 <a class="post-hover" href="{{ url_for('view_post', post_id = post.id) }}">
                     <img class="card-img-top rounded-0" src="{{ post.img_url }}" alt="post-image">

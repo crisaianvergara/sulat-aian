@@ -173,8 +173,7 @@ p.post-body {
 }
 
 .twitter-tweet {
-    margin-top: 0 !important;
-    margin: auto;
+    margin: 0 auto !important;
 }
 
 .input-subscribe {
@@ -232,3 +231,18 @@ p.post-body {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 0.9rem;
 }
+
+/* Media Queries */
+
+@media (max-width: 320px) {
+    #blog-section .btn, #home-section .btn {
+        margin-bottom: 8px;
+        margin-left: 0 !important;
+        width: 100%;
+    }
+
+    .twitter-tweet {
+        display: none !important;
+    }
+}
+
