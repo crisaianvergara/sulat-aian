@@ -77,18 +77,10 @@
     {% with messages = get_flashed_messages(with_categories = true) %}
         {% if messages %}
             {% for category, message in messages %}
-                {% if category == "green" %}
-                    <div class="text-center alert alert-success alert-dismissible fade show" role="alert">
+                <div class="text-center alert alert-{{ category }} alert-dismissible fade show" role="alert">
                     {{ message }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endif %}
-                {% if category == "red" %}
-                    <div class="text-center alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endif %}
+                </div>
             {% endfor %}
         {% endif %}
     {% endwith %}

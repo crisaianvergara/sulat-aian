@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+    <!-- Section About -->
+    <section id="about-section">
+        <!-- Row -->
+        <div class="row col-md-8 m-auto">
+            <!-- Card -->
+            <div class="card bg-transparent border-0 mb-5">
+                <!-- Card Image -->
+                <img class="card-img-top rounded-0" src="{{ url_for('static', filename='img/author.jpg') }}" alt="post-image">
+                <!-- Card Body -->
+                <div class="card-body px-0">
+                    <!-- Card Title -->
+                    <h2 class="card-title mb-3">Hello! I'm Cris-aian Vergara.</h2>
+                    <p class="text-dark-emphasis">I'm a blogger and aspiring Python Back-end Developer. With a passion for technology and a love for writing, I aim to bring a unique perspective to the world of development.
+                    </p>
+                    <p class="text-dark-emphasis">
+                        I have honed my writing skills through my blog and now, I am eager to learn and grow as a back-end developer. With a focus on Python, I am dedicated to developing efficient and effective systems that will streamline processes and improve user experiences.
+                    </p>
+                    <p class="text-dark-emphasis">
+                        I have strong problem-solving skills and the ability to effectively communicate complex ideas. I am excited to bring these skills to the tech industry and make a positive impact.
+                    </p>
+                    <p class="text-dark-emphasis">Thank you for visiting my website. I hope to share my journey and learning experiences with you as I grow as a developer.</p>
+
+                </div>
+                <!-- End of Card Body -->
+            </div>
+            <!-- End of Card -->
+        </div>
+        <!-- End of Row -->
+    </section>
+    <!-- End of About Section -->
+{% endblock %}
