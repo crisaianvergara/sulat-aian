@@ -1,1 +1,12 @@
 READ ME
+
+python3 -m venv .venv
+. .venv/bin/activate
+pip install -r requirements.txt
+python3 main.py
+
+
+docker build --tag sulat-aian .
+docker images
+docker run -p 5000:5000 --env-file .env sulat-aian
+docker run -d -p 5000:5000 --env-file .env sulat-aian
