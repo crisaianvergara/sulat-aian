@@ -6,7 +6,10 @@ pip install -r requirements.txt
 python3 main.py
 
 
-docker build --tag sulat-aian .
-docker images
-docker run -p 5000:5000 --env-file .env sulat-aian
-docker run -d -p 5000:5000 --env-file .env sulat-aian
+sudo docker build --tag sulat-aian .
+sudo docker images
+sudo docker run -p 5000:5000 --env-file .env sulat-aian
+sudo docker run -d -p 5000:5000 --env-file .env sulat-aian
+
+sudo docker build --tag kriskap .
+sudo docker run -d -p 6000:5000 --env-file .env kriskap
