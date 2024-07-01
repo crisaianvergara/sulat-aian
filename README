@@ -13,3 +13,5 @@ sudo docker run -d -p 5000:5000 --env-file .env sulat-aian
 
 sudo docker build --tag kriskap .
 sudo docker run -d -p 6000:5000 --env-file .env kriskap
+
+sudo docker start <container_name>
